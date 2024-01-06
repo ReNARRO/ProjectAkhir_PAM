@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">PreOrder Merchandise</string>
+    <string name="detail_product">Detail Merchandise</string>
+    <string name="entry_product">Tambah Product</string>
+    <string name="entry_pelanggan">Tambah Pelanggan</string>
+    <string name="detail_pelanggan">Detail Pelanggan</string>
+    <string name="edit_pelanggan">Edit Pelanggan</string>
+
+    <string name="deskripsi_no_item">Tidak ada data Product. Tap + untuk menambahkan data</string>
+
+    <string name="nama">Nama Pelanggan</string>
+    <string name="ukuran">Ukuran</string>
+    <string name="angkatan">Angkatan</string>
+    <string name="telpon">Telpon</string>
+
+    <string name="nama1">Nama Pelanggan :</string>
+    <string name="ukuran1">Ukuran :</string>
+    <string name="angkatan1">Angkatan :</string>
+    <string name="telpon1">Telpon :</string>
+
+    <string name="btn_back">Back</string>
+    <string name="btn_order">Order</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_update">Update order</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_delete">Delete</string>
+
+    <string name="history">History</string>
+    <string name="product">Product</string>
+    <string name="back">Back</string>
+    <string name="pelanggan">Pelanggan</string>
+
+
+    <string name="required_field">* required fields</string>
+</resources>
