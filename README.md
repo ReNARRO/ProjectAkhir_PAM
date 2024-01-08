@@ -1,4 +1,15 @@
-![halamandetailproduct_projectakhir](https://github.com/ReNARRO/ProjectAkhir_PAM/assets/114455078/c978bcd0-a06c-437d-85be-ab6d413451fb)
-![halamanorder_projectakahir](https://github.com/ReNARRO/ProjectAkhir_PAM/assets/114455078/736254ae-1067-470e-a5fc-1821badf4464)
+Final Project Pengembangan Aplikasi Mobile 2024
 
+1. Project Name
+   Pre-Order Merchandise
 
+   
+2. Project Description
+   Aplikasi ini dibuat untuk memudahkan pengguna untuk melakukan pemesanan product yang di tawarkan oleh HMJ.
+   Sehingga pengguna dapat mudah melihat dan memesan product di tawarkan oleh hmj
+   
+3. Use Case
+
+   
+5. Detail Pembagian 
+   
