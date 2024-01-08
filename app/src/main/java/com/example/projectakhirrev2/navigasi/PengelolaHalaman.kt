@@ -79,7 +79,9 @@ fun HostNavigasi(
                 navigateBack = { navController.popBackStack() })
         }
         composable(HistoryDestinasi.route){
-            HistoryScreen()
+            HistoryScreen(
+                navigateBack = {navController.popBackStack()}
+            )
         }
     }
 }
