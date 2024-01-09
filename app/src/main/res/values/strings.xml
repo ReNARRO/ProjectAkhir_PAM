@@ -13,6 +13,11 @@
     <string name="angkatan">Angkatan</string>
     <string name="telpon">Telpon</string>
 
+    <string name="nm_product">Nama Product</string>
+    <string name="price">Harga</string>
+    <string name="desk">Deskripsi</string>
+    <string name="gambar">Gambar</string>
+
     <string name="nama1">Nama Pelanggan :</string>
     <string name="ukuran1">Ukuran :</string>
     <string name="angkatan1">Angkatan :</string>
