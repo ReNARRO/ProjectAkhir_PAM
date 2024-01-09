@@ -24,6 +24,8 @@ import com.example.projectakhirrev2.ui.halaman.order.HistoryDestinasi
 import com.example.projectakhirrev2.ui.halaman.order.HistoryScreen
 import com.example.projectakhirrev2.ui.halaman.order.OrderDestinasi
 import com.example.projectakhirrev2.ui.halaman.order.OrderPelangganScreen
+import com.example.projectakhirrev2.ui.halaman.product.AddDestinasi
+import com.example.projectakhirrev2.ui.halaman.product.AddProductScreen
 
 @Composable
 fun PreOrderApp(navController: NavHostController = rememberNavController()) {
@@ -62,11 +64,16 @@ fun HostNavigasi(
 ) {
     NavHost(
         navController = navController,
-        startDestination = DetailsPDestinasi.route,
+        startDestination = DestinasiHome.route,
         modifier = Modifier
     ) {
         composable(DestinasiHome.route) {
-            HomeScreen(navigateToItemEntry = { /*TODO*/ }, onAddProduct = navController )
+            HomeScreen(
+                navigateToItemEntry = {},
+                onAddProduct = navController )
+        }
+        composable(AddDestinasi.route){
+            AddProductScreen(navigateBack = {navController.popBackStack()})
         }
         composable(DetailsPDestinasi.route){
             DetailProductScreen(

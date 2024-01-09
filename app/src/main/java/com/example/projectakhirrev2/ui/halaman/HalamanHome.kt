@@ -41,6 +41,7 @@ import com.example.projectakhirrev2.R
 import com.example.projectakhirrev2.data.product.Product
 import com.example.projectakhirrev2.navigasi.DestinasiNavigasi
 import com.example.projectakhirrev2.navigasi.PreOrderAppBar
+import com.example.projectakhirrev2.ui.halaman.product.AddDestinasi
 import com.example.projectakhirrev2.ui.halaman.product.DetailsPDestinasi
 import com.example.projectakhirrev2.ui.viewmodel.HomeViewModel
 import com.example.projectakhirrev2.ui.viewmodel.PenyediaViewModel
@@ -110,7 +111,7 @@ fun HomeScreen(
                                 isDialogVisible = false
                                 // Navigate to the second screen only if the code is "12345"
                                 if (kode == "12345") {
-                                    onAddProduct.navigate(DetailsPDestinasi.route)
+                                    onAddProduct.navigate(AddDestinasi.route)
                                 }
                             }
                         ) {
