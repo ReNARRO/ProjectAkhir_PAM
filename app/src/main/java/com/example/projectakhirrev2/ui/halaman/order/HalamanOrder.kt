@@ -102,7 +102,7 @@ fun OrderPelangganBody(
         verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_large)),
         modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_medium))
     ){
-        FormInputSiswa(
+        FormInputPelanggan(
             detailPelanggan = uiStatePelanggan.detailPelanggan,
             onValueChange = onSiswaValueChange,
             modifier = modifier.fillMaxWidth()
@@ -121,7 +121,7 @@ fun OrderPelangganBody(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FormInputSiswa(
+fun FormInputPelanggan(
     detailPelanggan: DetailPelanggan,
     modifier: Modifier = Modifier,
     onValueChange: (DetailPelanggan) -> Unit = {},
