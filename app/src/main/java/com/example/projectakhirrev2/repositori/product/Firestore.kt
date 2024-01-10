@@ -37,11 +37,12 @@ object GetData {
             .get()
             .addOnSuccessListener { result ->
                 val products = result.documents.mapNotNull { document ->
+                    val id = document.id
                     val name = document.getString("name")
                     val price = document.getString("price")
                     val deskripsi = document.getString("deskripsi")
                     if (name != null && price != null && deskripsi != null) {
-                        Product(name = name, price = price, deskripsi = deskripsi, imageUrl = "")
+                        Product(id = id, name = name, price = price, deskripsi = deskripsi, imageUrl = "")
                     } else {
                         null
                     }
