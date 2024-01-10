@@ -12,9 +12,6 @@ import com.example.projectakhirrev2.ui.viewmodel.Order.OrderViewModel
 object PenyediaViewModel {
     val Factory = viewModelFactory {
         initializer {
-            HomeViewModel(aplikasiPreOrder().container.repositoriProduct)
-        }
-        initializer {
             OrderViewModel(aplikasiPreOrder().container.repositoriPelanggan)
         }
         initializer {
