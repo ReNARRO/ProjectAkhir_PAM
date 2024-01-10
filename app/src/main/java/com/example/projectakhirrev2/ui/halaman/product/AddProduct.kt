@@ -1,10 +1,16 @@
 package com.example.projectakhirrev2.ui.halaman.product
 
+import android.net.Uri
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -12,6 +18,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -21,14 +28,23 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImage
 import com.example.projectakhirrev2.R
+import com.example.projectakhirrev2.data.product.FirestoreUtil
+import com.example.projectakhirrev2.data.product.StorageUtil
 import com.example.projectakhirrev2.navigasi.DestinasiNavigasi
 import com.example.projectakhirrev2.navigasi.PreOrderAppBar
 import com.example.projectakhirrev2.ui.viewmodel.Order.DetailPelanggan
@@ -38,7 +54,7 @@ import com.example.projectakhirrev2.ui.viewmodel.PenyediaViewModel
 import kotlinx.coroutines.launch
 
 
-object AddDestinasi: DestinasiNavigasi {
+object AddDestinasi : DestinasiNavigasi {
     override val route = "add"
     override val titleRes = R.string.entry_product
 }
@@ -48,9 +64,7 @@ object AddDestinasi: DestinasiNavigasi {
 fun AddProductScreen(
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: OrderViewModel = viewModel(factory = PenyediaViewModel.Factory )
-){
-    val coroutineScope = rememberCoroutineScope()
+) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     Scaffold(
@@ -63,17 +77,8 @@ fun AddProductScreen(
                 scrollBehavior = scrollBehavior
             )
         }
-    ) {
-            innerPadding ->
-        AddProductBody(
-            uiStatePelanggan = viewModel.uiStatePelanggan,
-            onSiswaValueChange = {},
-            onSaveClick = {
-                coroutineScope.launch {
-                    viewModel.savePelanggan()
-                    navigateBack
-                }
-            },
+    ) { innerPadding ->
+        halamanform(
             modifier = Modifier
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
@@ -84,83 +89,123 @@ fun AddProductScreen(
 }
 
 
-@Composable
-fun AddProductBody(
-    uiStatePelanggan: UIStatePelanggan,
-    onSiswaValueChange: () -> Unit,
-    onSaveClick: () -> Unit,
-    modifier: Modifier = Modifier
-){
-    Column (
-        verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_large)),
-        modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_medium))
-    ){
-        FormInputProduct(
-            onValueChange = onSiswaValueChange,
-            modifier = modifier.fillMaxWidth()
-        )
-        Button(
-            onClick = onSaveClick,
-            enabled = uiStatePelanggan.isEntryValid,
-            shape = MaterialTheme.shapes.small,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(text = stringResource(id = R.string.btn_save))
-        }
-    }
-}
-
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FormInputProduct(
-    modifier: Modifier = Modifier,
-    onValueChange: () -> Unit = {},
-    enabled: Boolean = true
-){
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_medium))
-    ) {
-        OutlinedTextField(
-            value = "",
-            onValueChange ={},
-            leadingIcon = { Icon(imageVector = Icons.Filled.Person, contentDescription = "") },
-            label = { Text(stringResource(R.string.nm_product)) },
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth(),
-            enabled = enabled,
+fun halamanform(modifier: Modifier) {
+    var uri by remember {
+        mutableStateOf<Uri?>(null)
+    }
 
-            )
-        OutlinedTextField(
-            value = "",
-            onValueChange ={},
-            label = { Text(stringResource(R.string.price)) },
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth(),
-            enabled = enabled
-        )
-        OutlinedTextField(
-            value = "",
-            onValueChange ={},
-            label = { Text(stringResource(R.string.desk)) },
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth(),
-            enabled = enabled
-        )
-        Text(text = stringResource(id = R.string.gambar))
+    var name by remember {
+        mutableStateOf("")
+    }
 
+    var price by remember {
+        mutableStateOf("")
+    }
 
-        if (enabled) {
-            Text(
-                text = stringResource(id = R.string.required_field),
-                modifier = Modifier.padding(start = dimensionResource(id = R.dimen.padding_medium))
-            )
+    var deskripsi by remember {
+        mutableStateOf("")
+    }
+
+    var isUploading by remember {
+        mutableStateOf(false)
+    }
+
+    val singlePhotoPicker = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia(),
+        onResult = {
+            uri = it
         }
-        Divider(
-            thickness = dimensionResource(id = R.dimen.padding_small),
-            modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.padding_medium))
+    )
 
+    val context = LocalContext.current
+
+    Column {
+        AsyncImage(model = uri, contentDescription = null, modifier = Modifier.size(248.dp))
+        Row {
+            Button(onClick = {
+                singlePhotoPicker.launch(
+                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                )
+            }) {
+                Text("Pick Single Image")
+            }
+
+            // Tombol untuk Upload Gambar
+            Button(
+                onClick = {
+                    if (uri != null) {
+                        isUploading = true // Set status uploading menjadi true
+                        StorageUtil.uploadToStorage(uri!!, context, "image") { imageUrl ->
+                            isUploading =
+                                false // Set status uploading menjadi false setelah selesai
+                            Toast.makeText(
+                                context,
+                                "Image uploaded successfully",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
+                    } else {
+                        Toast.makeText(context, "Please select an image", Toast.LENGTH_SHORT).show()
+                    }
+                },
+                modifier = Modifier
+                    .padding(start = 8.dp)
+            ) {
+                Text("Upload Image")
+            }
+            if (isUploading) {
+                CircularProgressIndicator()
+            }
+        }
+
+
+        OutlinedTextField(
+            value = name,
+            onValueChange = { name = it },
+            label = { Text(stringResource(id = R.string.nm_product)) },
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
         )
+
+        OutlinedTextField(
+            value = price,
+            onValueChange = { price = it },
+            label = { Text(stringResource(id = R.string.price)) },
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
+        )
+
+        OutlinedTextField(
+            value = deskripsi,
+            onValueChange = { deskripsi = it },
+            label = { Text(stringResource(id = R.string.desk)) },
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
+        )
+
+        // Tombol untuk Submit Form (Simpan ke Firestore)
+        Button(onClick = {
+            if (name.isNotEmpty() && price.isNotEmpty() && deskripsi.isNotEmpty() && uri != null) {
+                isUploading = true // Set status uploading menjadi true
+                StorageUtil.uploadToStorage(uri!!, context, "image") { imageUrl ->
+                    isUploading = false // Set status uploading menjadi false setelah selesai
+                    // Panggil fungsi untuk menyimpan data ke Firestore
+                    FirestoreUtil.saveData(name, price, deskripsi, imageUrl)
+                    Toast.makeText(context, "Data submitted successfully", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            } else {
+                Toast.makeText(context, "Please fill in all fields", Toast.LENGTH_SHORT).show()
+            }
+        }) {
+            Text("Submit Form")
+        }
     }
 }
+
