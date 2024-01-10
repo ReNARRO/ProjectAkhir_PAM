@@ -1,8 +1,6 @@
 package com.example.projectakhirrev2.data.product
 
 import android.util.Log
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
