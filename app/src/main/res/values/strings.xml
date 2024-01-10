@@ -37,4 +37,9 @@
 
 
     <string name="required_field">* required fields</string>
+
+    <string name="yes">Ya</string>
+    <string name="no">Tidak</string>
+    <string name="delete">Hapus</string>
+    <string name="attention">Perhatian</string>
 </resources>
