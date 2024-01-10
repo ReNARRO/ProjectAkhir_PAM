@@ -11,7 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.projectakhirrev2.navigasi.PreOrderApp
+import com.example.projectakhirrev2.ui.halaman.product.AddProductScreen
 import com.example.projectakhirrev2.ui.theme.Projectakhirrev2Theme
+import com.google.firebase.FirebaseApp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +25,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    PreOrderApp()
+                    FirebaseApp.initializeApp(this)
+                    AddProductScreen(navigateBack = {})
                 }
             }
         }

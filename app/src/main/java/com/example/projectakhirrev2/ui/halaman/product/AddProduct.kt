@@ -1,6 +1,7 @@
 package com.example.projectakhirrev2.ui.halaman.product
 
 import android.net.Uri
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -123,42 +124,12 @@ fun halamanform(modifier: Modifier) {
 
     Column {
         AsyncImage(model = uri, contentDescription = null, modifier = Modifier.size(248.dp))
-        Row {
-            Button(onClick = {
-                singlePhotoPicker.launch(
-                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                )
-            }) {
-                Text("Pick Single Image")
-            }
-
-            // Tombol untuk Upload Gambar
-            Button(
-                onClick = {
-                    if (uri != null) {
-                        isUploading = true // Set status uploading menjadi true
-                        StorageUtil.uploadToStorage(uri!!, context, "image") { imageUrl ->
-                            isUploading =
-                                false // Set status uploading menjadi false setelah selesai
-                            Toast.makeText(
-                                context,
-                                "Image uploaded successfully",
-                                Toast.LENGTH_SHORT
-                            )
-                                .show()
-                        }
-                    } else {
-                        Toast.makeText(context, "Please select an image", Toast.LENGTH_SHORT).show()
-                    }
-                },
-                modifier = Modifier
-                    .padding(start = 8.dp)
-            ) {
-                Text("Upload Image")
-            }
-            if (isUploading) {
-                CircularProgressIndicator()
-            }
+        Button(onClick = {
+            singlePhotoPicker.launch(
+                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+            )
+        }) {
+            Text("Pick Single Image")
         }
 
 
@@ -188,23 +159,43 @@ fun halamanform(modifier: Modifier) {
                 .padding(16.dp)
                 .fillMaxWidth()
         )
+        Row {
 
-        // Tombol untuk Submit Form (Simpan ke Firestore)
-        Button(onClick = {
-            if (name.isNotEmpty() && price.isNotEmpty() && deskripsi.isNotEmpty() && uri != null) {
-                isUploading = true // Set status uploading menjadi true
-                StorageUtil.uploadToStorage(uri!!, context, "image") { imageUrl ->
-                    isUploading = false // Set status uploading menjadi false setelah selesai
-                    // Panggil fungsi untuk menyimpan data ke Firestore
-                    FirestoreUtil.saveData(name, price, deskripsi, imageUrl)
-                    Toast.makeText(context, "Data submitted successfully", Toast.LENGTH_SHORT)
-                        .show()
+            // Tombol untuk Submit Form (Simpan ke Firestore)
+            Button(onClick = {
+                if (name.isNotEmpty() && price.isNotEmpty() && deskripsi.isNotEmpty() && uri != null) {
+                    try {
+
+
+                        isUploading = true // Set status uploading menjadi true
+                        StorageUtil.uploadToStorage(uri!!, context, "image") { imageUrl ->
+                            isUploading =
+                                false // Set status uploading menjadi false setelah selesai
+                            // Panggil fungsi untuk menyimpan data ke Firestore
+                            FirestoreUtil.saveData(name, price, deskripsi, imageUrl)
+                            Toast.makeText(
+                                context,
+                                "Data submitted successfully",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                            Log.d(
+                                "FirestoreUtil",
+                                "Data submitted successfully: Name=$name, Price=$price, Deskripsi=$deskripsi, ImageUrl=$imageUrl"
+                            )
+                        }
+                    }catch (e: Exception) {
+                        Log.e("FirestoreError", "Error during Firestore operation", e)
+                    }
+                } else {
+                    Toast.makeText(context, "Please fill in all fields", Toast.LENGTH_SHORT).show()
                 }
-            } else {
-                Toast.makeText(context, "Please fill in all fields", Toast.LENGTH_SHORT).show()
+            }) {
+                Text("Submit Form")
             }
-        }) {
-            Text("Submit Form")
+            if (isUploading) {
+                CircularProgressIndicator()
+            }
         }
     }
 }
