@@ -32,6 +32,8 @@ import com.example.projectakhirrev2.ui.halaman.order.OrderDestinasi
 import com.example.projectakhirrev2.ui.halaman.order.OrderPelangganScreen
 import com.example.projectakhirrev2.ui.halaman.product.AddDestinasi
 import com.example.projectakhirrev2.ui.halaman.product.AddProductScreen
+import com.example.projectakhirrev2.ui.halaman.product.DetailScreen
+import com.example.projectakhirrev2.ui.halaman.product.DetailproductDestination
 
 @Composable
 fun PreOrderApp(navController: NavHostController = rememberNavController()) {
@@ -76,7 +78,11 @@ fun HostNavigasi(
         composable(DestinasiHome.route) {
             HomeScreen(
                 navigateToItemEntry = {},
-                onAddProduct = navController )
+                onAddProduct = navController,
+                onDetailClick = { itemId ->
+                    navController.navigate("${DetailproductDestination.route}/$itemId")
+                    println("itemId: $itemId")
+                })
         }
         composable(AddDestinasi.route){
             AddProductScreen(navigateBack = {navController.popBackStack()})
@@ -115,6 +121,17 @@ fun HostNavigasi(
         ) {
             ItemEditScreen(navigateBack = { navController.popBackStack() },
                 onNavigateUp = { navController.navigateUp() })
+        }
+        composable(
+            route = DetailDestination.routeWithArgs,
+            arguments = listOf(navArgument(DetailproductDestination.productId) {
+                type = NavType.StringType
+            })
+        ) { backStackEntry ->
+            val kontakId = backStackEntry.arguments?.getString(DetailproductDestination.productId)
+            kontakId?.let {
+                DetailScreen()
+            }
         }
     }
 }
