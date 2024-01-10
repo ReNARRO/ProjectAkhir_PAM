@@ -4,6 +4,9 @@ buildscript {
         set("nav_version", "2.5.3")
         set("room_version", "2.5.2")
     }
+    dependencies {
+        classpath("com.google.gms:google-services:4.4.0")
+    }
 }
 
 plugins {
