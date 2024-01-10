@@ -42,13 +42,6 @@ import com.example.projectakhirrev2.ui.halaman.DestinasiHome
 import com.example.projectakhirrev2.ui.halaman.order.HistoryDestinasi
 import com.example.projectakhirrev2.ui.halaman.order.OrderDestinasi
 
-data class BottomNavigationItem(
-    val title: String,
-    val selectedIcon: ImageVector,
-    val unselectedIcon: ImageVector,
-    val hasNews: Boolean,
-    val badgeCount: Int? = null
-)
 object DetailsPDestinasi: DestinasiNavigasi {
     override val route = "detailsproduct"
     override val titleRes = R.string.detail_product
@@ -72,6 +65,7 @@ fun DetailProductScreen(
                 canNavigateBack = false
             )
         },
+
     ){ innerPadding ->
         DetailProductBody(
         modifier = modifier
