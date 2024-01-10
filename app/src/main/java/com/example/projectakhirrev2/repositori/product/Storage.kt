@@ -1,4 +1,4 @@
-package com.example.projectakhirrev2.data.product
+package com.example.projectakhirrev2.repositori.product
 
 import android.content.Context
 import android.net.Uri
