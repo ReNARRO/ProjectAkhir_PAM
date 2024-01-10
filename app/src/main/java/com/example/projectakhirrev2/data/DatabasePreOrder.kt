@@ -6,13 +6,10 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.projectakhirrev2.data.pelanggan.Pelanggan
 import com.example.projectakhirrev2.data.pelanggan.PelangganDao
-import com.example.projectakhirrev2.data.product.Product
-import com.example.projectakhirrev2.data.product.ProductDao
 
-@Database(entities = [Pelanggan::class, Product::class], version = 2, exportSchema = false)
+@Database(entities = [Pelanggan::class], version = 2, exportSchema = false)
 abstract class DatabasePreOrder: RoomDatabase() {
     abstract fun pelangganDao(): PelangganDao
-    abstract fun productDao(): ProductDao
 
     companion object{
         @Volatile
