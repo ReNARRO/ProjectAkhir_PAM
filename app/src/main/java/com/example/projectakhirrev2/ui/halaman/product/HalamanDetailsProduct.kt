@@ -52,13 +52,13 @@ data class BottomNavigationItem(
 object DetailsPDestinasi: DestinasiNavigasi {
     override val route = "detailsproduct"
     override val titleRes = R.string.detail_product
+    const val productId = "itemId"
+    val routeWithArgs = "${route}/{$productId}"
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailProductScreen(
-    onAddCustClicked:() -> Unit,
-    onHistoryCustClicked: () -> Unit,
     modifier: Modifier = Modifier,
     navigateBack: () -> Unit
 ){
@@ -72,38 +72,6 @@ fun DetailProductScreen(
                 canNavigateBack = false
             )
         },
-        bottomBar = {
-            NavigationBar {
-                NavigationBarItem(
-                    selected = selectedItems == "Product",
-                    onClick = { navigateBack },
-                    label = { Text(text = "Product")},
-                    icon = {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "")
-                    }
-                )
-                NavigationBarItem(
-                    selected = selectedItems == "History Order",
-                    onClick = onHistoryCustClicked,
-                    label = { Text(text = "History Order")},
-                    icon = {
-                        Icon(
-                            imageVector = Icons.Filled.List,
-                            contentDescription = "")
-                    })
-                NavigationBarItem(
-                    selected = selectedItems == "Order",
-                    onClick = onAddCustClicked,
-                    label = { Text(text = "Order")},
-                    icon = {
-                        Icon(
-                            imageVector = Icons.Filled.Add,
-                            contentDescription = "")
-                    })
-            }
-        }
     ){ innerPadding ->
         DetailProductBody(
         modifier = modifier

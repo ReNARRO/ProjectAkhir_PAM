@@ -80,9 +80,12 @@ fun HostNavigasi(
                 navigateToItemEntry = {},
                 onAddProduct = navController,
                 onDetailClick = { itemId ->
-                    navController.navigate("${DetailproductDestination.route}/$itemId")
+                    navController.navigate("${DetailsPDestinasi.route}/$itemId")
                     println("itemId: $itemId")
-                })
+                } ,
+                onAddCustClicked = { navController.navigate(OrderDestinasi.route) },
+                onHistoryCustClicked = { navController.navigate(HistoryDestinasi.route) }
+            )
         }
         composable(AddDestinasi.route){
             AddProductScreen(navigateBack = {navController.popBackStack()})
@@ -90,8 +93,7 @@ fun HostNavigasi(
         composable(DetailsPDestinasi.route){
             DetailProductScreen(
                 navigateBack = {navController.popBackStack()},
-                onAddCustClicked = { navController.navigate(OrderDestinasi.route) },
-                onHistoryCustClicked = { navController.navigate(HistoryDestinasi.route) })
+            )
         }
         composable(OrderDestinasi.route){
             OrderPelangganScreen(
