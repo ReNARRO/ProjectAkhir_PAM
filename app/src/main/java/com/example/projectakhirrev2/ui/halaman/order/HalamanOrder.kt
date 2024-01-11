@@ -54,6 +54,7 @@ object OrderDestinasi: DestinasiNavigasi {
 @Composable
 fun OrderPelangganScreen(
     navigateBack: () -> Unit,
+    navigateUp: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: OrderViewModel = viewModel(factory = PenyediaViewModel.Factory )
 ){
@@ -66,7 +67,7 @@ fun OrderPelangganScreen(
             PreOrderAppBar(
                 title = stringResource(OrderDestinasi.titleRes),
                 canNavigateBack = true,
-                navigateUp = navigateBack,
+                navigateUp = navigateUp,
                 scrollBehavior = scrollBehavior
             )
         }
