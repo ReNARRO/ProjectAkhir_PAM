@@ -20,7 +20,7 @@ import androidx.navigation.navArgument
 import com.example.projectakhirrev2.R
 import com.example.projectakhirrev2.ui.halaman.DestinasiHome
 import com.example.projectakhirrev2.ui.halaman.HomeScreen
-import com.example.projectakhirrev2.ui.halaman.order.DetailDestination
+import com.example.projectakhirrev2.ui.halaman.order.DetailpelangganDestination
 import com.example.projectakhirrev2.ui.halaman.order.DetailsScreen
 import com.example.projectakhirrev2.ui.halaman.order.HistoryDestinasi
 import com.example.projectakhirrev2.ui.halaman.order.HistoryScreen
@@ -95,12 +95,12 @@ fun HostNavigasi(
         composable(HistoryDestinasi.route){
             HistoryScreen(
                 navigateBack = {navController.popBackStack()},
-                onDetailClick = {navController.navigate("${DetailDestination.route}/$it")}
+                onDetailClick = {navController.navigate("${DetailpelangganDestination.route}/$it")}
             )
         }
         composable(
-            DetailDestination.routeWithArgs,
-            arguments = listOf(navArgument(DetailDestination.pelangganIdArg) {
+            DetailpelangganDestination.routeWithArgs,
+            arguments = listOf(navArgument(DetailpelangganDestination.pelangganIdArg) {
                 type = NavType.IntType
             })
         ) {
@@ -118,7 +118,7 @@ fun HostNavigasi(
                 onNavigateUp = { navController.navigateUp() })
         }
         composable(
-            route = DetailDestination.routeWithArgs,
+            route = DetailproductDestination.routeWithArgs,
             arguments = listOf(navArgument(DetailproductDestination.productId) {
                 type = NavType.StringType
             })

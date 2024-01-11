@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.projectakhirrev2.repositori.pelanggan.RepositoriPelanggan
-import com.example.projectakhirrev2.ui.halaman.order.DetailDestination
+import com.example.projectakhirrev2.ui.halaman.order.DetailpelangganDestination
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
@@ -15,7 +15,7 @@ class DetailsOrderViewModel(
     savedStateHandle: SavedStateHandle,
     private val repositoriPelanggan: RepositoriPelanggan
 ) : ViewModel(){
-    private val pelangganId: Int = checkNotNull(savedStateHandle[DetailDestination.pelangganIdArg])
+    private val pelangganId: Int = checkNotNull(savedStateHandle[DetailpelangganDestination.pelangganIdArg])
     val uiState : StateFlow<ItemDetailsUiState> =
         repositoriPelanggan.getPelangganStream(pelangganId).filterNotNull().map{
             ItemDetailsUiState(detailPelanggan = it.toDetailPelanggan())

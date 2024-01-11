@@ -44,8 +44,8 @@ import com.example.projectakhirrev2.ui.viewmodel.Order.toPelanggan
 import com.example.projectakhirrev2.ui.viewmodel.PenyediaViewModel
 import kotlinx.coroutines.launch
 
-object DetailDestination : DestinasiNavigasi {
-    override val route = "item_details"
+object DetailpelangganDestination : DestinasiNavigasi {
+    override val route = "item_details_pelanggan"
     override val titleRes = R.string.detail_pelanggan
     const val pelangganIdArg = "itemId"
     val routeWithArgs = "$route/{$pelangganIdArg}"
@@ -64,7 +64,7 @@ fun DetailsScreen(
     Scaffold(
         topBar = {
             PreOrderAppBar(
-                title = stringResource(DetailDestination.titleRes),
+                title = stringResource(DetailpelangganDestination.titleRes),
                 canNavigateBack = true,
                 navigateUp = navigasiBack
             )
