@@ -30,6 +30,11 @@ object PenyediaViewModel {
                 aplikasiPreOrder().container.repositoriPelanggan
             )
         }
+        initializer {
+            DetailsPViewModel(createSavedStateHandle(),
+                aplikasiPreOrder().container.productRepo
+            )
+        }
 
     }
 }

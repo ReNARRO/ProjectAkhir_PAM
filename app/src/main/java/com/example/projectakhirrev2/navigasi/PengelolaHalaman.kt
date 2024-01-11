@@ -125,7 +125,7 @@ fun HostNavigasi(
         ) { backStackEntry ->
             val kontakId = backStackEntry.arguments?.getString(DetailproductDestination.productId)
             kontakId?.let {
-                DetailScreenProduct()
+                DetailScreenProduct(navigateToEditItem = {}, navigateBack = { navController.popBackStack() })
             }
         }
     }
