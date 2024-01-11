@@ -152,14 +152,37 @@ fun DataPelanggan(
                     style = MaterialTheme.typography.titleMedium,
                 )
             }
-            Text(
-                text = pelanggan.ukuran,
-                style = MaterialTheme.typography.titleMedium,
-            )
-            Text(
-                text = pelanggan.angkatan,
-                style = MaterialTheme.typography.titleMedium,
-            )
+            Row {
+                Column {
+                    Row {
+                        Text(text = "Product : ")
+                        Text(
+                            text = pelanggan.jenis_p,
+                            style = MaterialTheme.typography.titleMedium)
+                    }
+
+                }
+
+                Spacer(Modifier.weight(1f))
+                Column {
+                    Row {
+                        Text(text = "Ukuran :")
+                        Text(
+                            text = pelanggan.ukuran,
+                            style = MaterialTheme.typography.titleMedium,
+                        )
+                    }
+
+                }
+            }
+            Row {
+                Text(text = "Angkatan : ")
+
+                Text(
+                    text = pelanggan.angkatan,
+                    style = MaterialTheme.typography.titleMedium,
+                )
+            }
         }
     }
 }
