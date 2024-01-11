@@ -19,8 +19,6 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.projectakhirrev2.R
 import com.example.projectakhirrev2.ui.halaman.DestinasiHome
-import com.example.projectakhirrev2.ui.halaman.product.DetailProductScreen
-import com.example.projectakhirrev2.ui.halaman.product.DetailsPDestinasi
 import com.example.projectakhirrev2.ui.halaman.HomeScreen
 import com.example.projectakhirrev2.ui.halaman.order.DetailDestination
 import com.example.projectakhirrev2.ui.halaman.order.DetailsScreen
@@ -32,7 +30,7 @@ import com.example.projectakhirrev2.ui.halaman.order.OrderDestinasi
 import com.example.projectakhirrev2.ui.halaman.order.OrderPelangganScreen
 import com.example.projectakhirrev2.ui.halaman.product.AddDestinasi
 import com.example.projectakhirrev2.ui.halaman.product.AddProductScreen
-import com.example.projectakhirrev2.ui.halaman.product.DetailScreen
+import com.example.projectakhirrev2.ui.halaman.product.DetailScreenProduct
 import com.example.projectakhirrev2.ui.halaman.product.DetailproductDestination
 
 @Composable
@@ -80,7 +78,7 @@ fun HostNavigasi(
                 navigateToItemEntry = {},
                 onAddProduct = navController,
                 onDetailClick = { itemId ->
-                    navController.navigate("${DetailsPDestinasi.route}/$itemId")
+                    navController.navigate("${DetailproductDestination.route}/$itemId")
                     println("itemId: $itemId")
                 } ,
                 onAddCustClicked = { navController.navigate(OrderDestinasi.route) },
@@ -90,14 +88,9 @@ fun HostNavigasi(
         composable(AddDestinasi.route){
             AddProductScreen(navigateBack = {navController.popBackStack()})
         }
-        composable(DetailsPDestinasi.route){
-            DetailProductScreen(
-                navigateBack = {navController.popBackStack()},
-            )
-        }
         composable(OrderDestinasi.route){
             OrderPelangganScreen(
-                navigateBack = { navController.popBackStack() })
+                navigateBack = { navController.popBackStack() }, navigateUp = {navController.popBackStack()})
         }
         composable(HistoryDestinasi.route){
             HistoryScreen(
@@ -132,7 +125,7 @@ fun HostNavigasi(
         ) { backStackEntry ->
             val kontakId = backStackEntry.arguments?.getString(DetailproductDestination.productId)
             kontakId?.let {
-                DetailScreen()
+                DetailScreenProduct()
             }
         }
     }
