@@ -25,6 +25,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -113,6 +114,7 @@ fun DetailScreenProduct(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ItemDetailsBody(
     detailUIState: DetailUIState,
@@ -124,24 +126,81 @@ private fun ItemDetailsBody(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         var deleteConfirmationRequired by rememberSaveable { mutableStateOf(false) }
+        var isAlertDialogVisible by rememberSaveable { mutableStateOf(false) }
+        var enteredCode by rememberSaveable { mutableStateOf("") }
+
         ItemDetails(
             product  = detailUIState.addEvent.toProduct(), modifier = Modifier.fillMaxWidth()
         )
 
         OutlinedButton(
-            onClick = { deleteConfirmationRequired = true },
+            onClick = {
+                // Munculkan AlertDialog untuk memasukkan kode
+                isAlertDialogVisible = true
+            },
             shape = MaterialTheme.shapes.small,
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Delete")
         }
+
+        if (isAlertDialogVisible) {
+            // AlertDialog untuk memasukkan kode
+            AlertDialog(
+                onDismissRequest = {
+                    isAlertDialogVisible = false
+                },
+                title = {
+                    Text("Enter Code")
+                },
+                text = {
+                    OutlinedTextField(
+                        value = enteredCode,
+                        onValueChange = { enteredCode = it },
+                        label = { Text("Enter Code") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            // Cek jika kode yang dimasukkan benar
+                            if (enteredCode == "12345") {
+                                isAlertDialogVisible = false
+                                deleteConfirmationRequired = true
+                            } else {
+                                // Tampilkan pesan kesalahan jika kode salah
+                                // Anda bisa menambahkan Logika atau Toast di sini
+                            }
+                        }
+                    ) {
+                        Text("OK")
+                    }
+                },
+                dismissButton = {
+                    Button(
+                        onClick = {
+                            // Tutup AlertDialog
+                            isAlertDialogVisible = false
+                        }
+                    ) {
+                        Text("Cancel")
+                    }
+                }
+            )
+        }
+
         if (deleteConfirmationRequired) {
+            // Munculkan DeleteConfirmationDialog jika kode benar
             DeleteConfirmationDialog(
                 onDeleteConfirm = {
                     deleteConfirmationRequired = false
                     onDelete()
                 },
-                onDeleteCancel = { deleteConfirmationRequired = false },
+                onDeleteCancel = {
+                    deleteConfirmationRequired = false
+                },
                 modifier = Modifier.padding(12.dp)
             )
         }
@@ -191,7 +250,6 @@ fun ItemDetails(
                 modifier = Modifier
                     .align(alignment = Alignment.CenterHorizontally)
                     .fillMaxWidth()
-                    .size(50.dp)
                     .clip(CircleShape)
             )
         }
