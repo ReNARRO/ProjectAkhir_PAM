@@ -175,6 +175,12 @@ fun ItemDetails(
                     horizontal = dimensionResource(id = R.dimen.padding_medium)
                 )
             )
+            ItemDetailsRow(
+                labelResId = R.string.jenis_p1, 
+                itemDetail = pelanggan.jenis_p,
+                modifier = modifier.padding(
+                    horizontal = dimensionResource(id = R.dimen.padding_medium)
+                ))
         }
     }
 }
