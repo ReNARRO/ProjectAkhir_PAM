@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.example.projectakhirrev2.data.pelanggan.Pelanggan
 import com.example.projectakhirrev2.data.pelanggan.PelangganDao
 
-@Database(entities = [Pelanggan::class], version = 1, exportSchema = false)
+@Database(entities = [Pelanggan::class], version = 2, exportSchema = false)
 abstract class DatabasePreOrder: RoomDatabase() {
     abstract fun pelangganDao(): PelangganDao
 
