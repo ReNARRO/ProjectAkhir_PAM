@@ -12,6 +12,7 @@
     <string name="ukuran">Ukuran</string>
     <string name="angkatan">Angkatan</string>
     <string name="telpon">Telpon</string>
+    <string name="jenis_p">Product</string>
 
     <string name="nm_product">Nama Product</string>
     <string name="price">Harga</string>
@@ -22,6 +23,7 @@
     <string name="ukuran1">Ukuran :</string>
     <string name="angkatan1">Angkatan :</string>
     <string name="telpon1">Telpon :</string>
+    <string name="jenis_p1">Product :</string>
 
     <string name="btn_back">Back</string>
     <string name="btn_order">Order</string>
@@ -42,4 +44,7 @@
     <string name="no">Tidak</string>
     <string name="delete">Hapus</string>
     <string name="attention">Perhatian</string>
+
+    <string name="korsa">Korsa</string>
+    <string name="jaket">Jacket</string>
 </resources>
