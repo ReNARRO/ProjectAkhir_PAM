@@ -80,18 +80,6 @@ fun DetailScreenProduct(
                 canNavigateBack = true,
                 navigateUp = navigateBack
             )
-        }, floatingActionButton = {
-            FloatingActionButton(
-                onClick = { navigateToEditItem(uiState.value.addEvent.id) },
-                shape = MaterialTheme.shapes.medium,
-                modifier = Modifier.padding(18.dp)
-
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Edit,
-                    contentDescription = "",
-                )
-            }
         }, modifier = modifier
     ) { innerPadding ->
         ItemDetailsBody(
