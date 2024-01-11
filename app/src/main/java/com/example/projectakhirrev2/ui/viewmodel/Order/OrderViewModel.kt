@@ -38,6 +38,7 @@ data class DetailPelanggan(
     val angkatan: String = "",
     val ukuran: String = "",
     val telpon: String = "",
+    val jenis_p : String = ""
 )
 fun DetailPelanggan.toPelanggan(): Pelanggan = Pelanggan(
     id = id,
@@ -45,6 +46,7 @@ fun DetailPelanggan.toPelanggan(): Pelanggan = Pelanggan(
     angkatan = angkatan,
     ukuran = ukuran,
     telpon = telpon,
+    jenis_p = jenis_p
 )
 
 fun Pelanggan.toUiStatePelanggan(isEntryValid: Boolean = false): UIStatePelanggan = UIStatePelanggan(
@@ -58,5 +60,6 @@ fun Pelanggan.toDetailPelanggan(): DetailPelanggan = DetailPelanggan(
     angkatan = angkatan,
     ukuran = ukuran,
     telpon = telpon,
+    jenis_p = jenis_p
 )
 

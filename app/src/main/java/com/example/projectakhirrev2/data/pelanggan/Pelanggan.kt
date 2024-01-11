@@ -11,5 +11,6 @@ data class Pelanggan(
     val angkatan : String,
     val ukuran :String,
     val telpon : String,
+    val jenis_p : String,
 
 )
